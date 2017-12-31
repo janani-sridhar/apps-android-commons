@@ -71,6 +71,16 @@ public class PrefixUpdater extends AsyncTask<Void, Void, List<String>> {
                 Timber.d("Filtering out year %s", s);
                 iterator.remove();
             }
+            
+            // Check if the year in the form of XX(X)0s is relevant. If not, delete.
+            else if (s.matches(".*0s.*")) {
+                Timber.d("This is a candidate for deletion: %s", s);
+
+                if (!s.matches(".*(200|201)0s.*")) {
+                    Timber.d("Filtering out this result: %s", s);
+                    iterator.remove();
+                }
+            }
         }
 
         Timber.d("Items: %s", items);
